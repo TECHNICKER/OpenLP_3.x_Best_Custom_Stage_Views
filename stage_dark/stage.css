@@ -57,6 +57,8 @@ body {
     text-align: right;
 
     color: salmon;
+
+    overflow-wrap: break-word;
   }
 
 /* ELEMENTS */
