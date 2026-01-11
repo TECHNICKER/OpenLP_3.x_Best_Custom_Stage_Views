@@ -18,6 +18,18 @@
 ******************************************************************************/
 @import url('https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&family=PT+Serif:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
+/*lightmode palette*/
+:root {
+  --text: black;
+  --background: white;
+}
+
+/*darkmode palette*/
+.dark {
+  --text: white;
+  --background: black;
+}
+
 body {
   height: 80vh;
   width: 80vw;
@@ -28,8 +40,8 @@ body {
   flex-direction: column;
   justify-content: center;
 
-  color: black;
-  background-color: white;
+  color: var(--text);
+  background-color: var(--background);
 
   font-family: Montserrat;
   font-feature-settings:'tnum';

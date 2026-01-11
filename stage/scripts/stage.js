@@ -98,7 +98,9 @@ window.OpenLP = { // Connect to the OpenLP Remote WebSocket to get pushed update
             div.append(" <span>");
             $("#verseorder span").last().attr("id", "tag" + tags).text(tag);
           }
-          //TOHLE JE JEN HOTFIX – POTŘEBA NAPSAT LEPŠÍ LOGIKU TAK ABY OPAKUJÍCÍ SE PRVNÍ SLIDE TO NEPOVAŽOVALO ZA OPAKOVÁNÍ REFRÉNU/SLOKY
+          /* THE FOLLOWING SECTION BEING COMMENTED OUT IS JUST A HOTFIX
+          A BETTER LOGIC NEEDS TO BE PUT TOGETHER TO RECOGNIZE WHEN TWO IDENTICAL SLIDES FOLLOW
+          TO AVOID DISPLAYING THE TAG TWICE WHEN ONLY THE FIRST LINE OF THE SLIDE REPEATS. */
           /* else {
             if ((slide["text"] == data.slides[lastChange]["text"]) &&
               (data.slides.length >= idx + (idx - lastChange))) {
@@ -141,7 +143,7 @@ window.OpenLP = { // Connect to the OpenLP Remote WebSocket to get pushed update
     if (slide["text"]) {
         text = slide["text"];
     } else {
-    // ŘÁDEK ZODPOVĚDNÝ ZA "currentslide" KDYŽ SLIDE NEOBSAHUJE TEXT
+    // THE FOLLOWING LINE IS RESPONSIBLE FOR WHAT IS DISPLAYED IN CASE OF "currentslide" CONTAINING NO TEXT.
         text = "<i></i><br />";
     }
     // use thumbnail if available
@@ -154,18 +156,19 @@ window.OpenLP = { // Connect to the OpenLP Remote WebSocket to get pushed update
     }
     // "slide_notes"
     text = text.replace(/\n/g, "<br />");
-    // ŘÁDEK ZODPOVĚDNÝ ZA NAČÍTÁNÍ "currentslide"
+    // THE FOLLOWING LINE IS RESPONSIBLE FOR LOADING "currentslide".
     $("#currentslide").html(text);
     text = "";
     if (OpenLP.currentSlide < OpenLP.currentSlides.length - 1) {
       for (var idx = OpenLP.currentSlide + 1; idx < OpenLP.currentSlides.length; idx++) {
-        //TAHLE PODMÍNKA MÁ NA SVĚDOMÍ SAME VERSE GROUPPING aka mezeru/její absenci pod zpívaným slidem
+        /* THE FOLLOWING CONDITION IS RESPONSIBLE FOR GROUPPING SLIDES THAT BELONG TO THE SAME SLIDE GROUP (VERSE/CHORUS/...)
+        AKA IF THE SPACING IS EQUAL BETWEEN ALL SLIDES OR IF THE SPACE IS REDUCED BETWEEN SLIDES FROM THE SAME SLIDE GROUP. */
         if (OpenLP.currentTags[idx] != OpenLP.currentTags[idx - 1])
             text = text + "<p class=\"nextslide\">";
         if (OpenLP.currentSlides[idx]["text"]) {
             text = text + OpenLP.currentSlides[idx]["text"];
         } else {
-          // TEXT TADY URČUJE CO SE ZOBRAZÍ VS "nextslide" KDYŽ SLIDE NEOBSAHUJE TEXT
+          // THE FOLLOWING LINE IS RESPONSIBLE FOR WHAT IS DISPLAYED IN CASE OF "nextslide" CONTAINING NO TEXT.
             text = text + "<i></i><br />";
         }
         if (OpenLP.currentTags[idx] != OpenLP.currentTags[idx - 1])
