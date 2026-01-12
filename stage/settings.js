@@ -1,4 +1,4 @@
 //save this file and refresh browser to apply changes
 
-let dark = 1		//set to 0 for lightmode
+let dark = 0		//set to 1 for dark mode
 let size = 100		//font size in %
